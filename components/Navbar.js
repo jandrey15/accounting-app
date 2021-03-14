@@ -1,23 +1,28 @@
 import React from 'react'
 // rfc -> react function component - extensions
 
-export default function Navbar() {
+export default function Navbar({ user }) {
   return (
-    <nav className="flex justify-between items-center py-4">
-      <p className="text-2xl font-bold text-grey-800">Personal Accounting</p>
-      <div className="flex justify-evenly w-2/5">
-        <a
-          href="/api/logout"
-          className="rounded bg-blue-500 hover:bg-blue-600 text-white py-2 px-4"
-        >
-          Logout
-        </a>
-        <a
-          href="/api/login"
-          className="rounded bg-blue-500 hover:bg-blue-600 text-white py-2 px-4"
-        >
-          Login
-        </a>
+    <nav className='flex justify-between items-center py-4'>
+      <p className='text-2xl font-bold text-grey-800'>Personal Accounting</p>
+      <div className='flex justify-evenly w-1/5'>
+        {user && (
+          <a
+            href='/api/logout'
+            className='rounded bg-blue-500 hover:bg-blue-600 text-white py-2 px-4'
+          >
+            Logout
+          </a>
+        )}
+
+        {!user && (
+          <a
+            href='/api/login'
+            className='rounded bg-blue-500 hover:bg-blue-600 text-white py-2 px-4'
+          >
+            Login
+          </a>
+        )}
       </div>
     </nav>
   )
