@@ -1,7 +1,9 @@
 import { table, getMinifiedRecord } from './utils/Airtable'
+import auth0 from './utils/auth0'
 
-export default async (req, res) => {
+export default auth0.withApiAuthRequired(async (req, res) => {
   const { id, fields } = req.body
+  const { user } = await auth0.getSession(req, res)
 
   try {
     const updateRecords = await table.update([{ id, fields }])
@@ -12,4 +14,4 @@ export default async (req, res) => {
     res.statusCode = 500
     res.json({ msg: 'Something went wrong! :(' })
   }
-}
+})

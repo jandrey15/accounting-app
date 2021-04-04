@@ -20,7 +20,7 @@ export default function Todo({ todo }) {
         type='checkbox'
         name='completed'
         id='completed'
-        checked={todo.fields.completed}
+        checked={todo.fields.completed || false}
         className='mr-2 form-checkox h-5 w-5'
         onChange={handleToggleCompleted}
       />
