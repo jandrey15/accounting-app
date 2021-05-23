@@ -1,4 +1,4 @@
-import { table, minifyRecords } from './utils/Airtable'
+import { table, minifyRecords } from './utils/AirtableIncomeExpenses'
 // Create new table
 import auth0 from './utils/auth0'
 
