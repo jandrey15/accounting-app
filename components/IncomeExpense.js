@@ -1,0 +1,23 @@
+import React, { useContext } from 'react'
+import { IncExpensContext } from '../contexts/IncomesExpensesContext'
+
+export default function IncomeExpense({ incomeExpense }) {
+  const { updateTodo, deleteTodo } = useContext(IncExpensContext)
+
+  const handleToggleCompleted = () => {
+    const updatedFields = {
+      ...todo.fields,
+      completed: !todo.fields.completed,
+    }
+    const updatedTodo = { id: todo.id, fields: updatedFields }
+
+    updateTodo(updatedTodo)
+  }
+
+  return (
+    <li className='bg-white flex items-center shadow-lg rounded-lg my-2 py-2 px-4'>
+      <p>{incomeExpense.fecha}</p>
+      <p>{incomeExpense.concepto}</p>
+    </li>
+  )
+}

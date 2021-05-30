@@ -17,8 +17,8 @@ const getMinifiedRecord = (record) => {
   }
 }
 
-const minifyRecords = (records) => {
+const minifyRecordsIncomeExpenses = (records) => {
   return records.map((record) => getMinifiedRecord(record))
 }
 
-export { table, getMinifiedRecord, minifyRecords }
+export { tableIncomeExpenses, getMinifiedRecord, minifyRecordsIncomeExpenses }
