@@ -3,6 +3,7 @@ import { IncExpensContext } from '../contexts/IncomesExpensesContext'
 
 export default function IncomeExpense({ incomeExpense }) {
   const { updateTodo, deleteTodo } = useContext(IncExpensContext)
+  // console.log(incomeExpense)
 
   const handleToggleCompleted = () => {
     const updatedFields = {
@@ -16,8 +17,10 @@ export default function IncomeExpense({ incomeExpense }) {
 
   return (
     <li className='bg-white flex items-center shadow-lg rounded-lg my-2 py-2 px-4'>
-      <p>{incomeExpense.fecha}</p>
-      <p>{incomeExpense.concepto}</p>
+      <p>{incomeExpense.fields.fecha}</p>
+      <p>{incomeExpense.fields.concepto}</p>
+      <p>{incomeExpense.fields.description}</p>
+      <h4>{new Intl.NumberFormat().format(incomeExpense.fields.cantidad)}</h4>
     </li>
   )
 }

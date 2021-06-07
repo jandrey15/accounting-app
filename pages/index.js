@@ -3,24 +3,24 @@ import { useEffect, useContext } from 'react'
 import Navbar from '../components/Navbar'
 import Todo from '../components/Todo'
 import IncomeExpense from '../components/IncomeExpense'
-import { minifyRecords, table } from './api/utils/Airtable'
-import {
-  minifyRecordsIncomeExpenses,
-  tableIncomeExpenses,
-} from './api/utils/AirtableIncomeExpenses'
+import { minifyRecords, table, tableIncomeExpenses } from './api/utils/Airtable'
 import { TodosContext } from '../contexts/TodosContext'
 import { IncExpensContext } from '../contexts/IncomesExpensesContext'
 import auth0 from './api/utils/auth0'
 import TodoForm from '../components/TodoForm'
 
-export default function Home({ initialTodos, user, initialIncomesExpenese }) {
+export default function Home({
+  initialTodos,
+  user,
+  initialIncomesExpenese = [],
+}) {
   const { todos, setTodos } = useContext(TodosContext)
-  const { incomesExpenses, setIncomesExpenese } = useContext(IncExpensContext)
+  const { incomesExpenses, setIncExpens } = useContext(IncExpensContext)
   // console.log(initialTodos)
   console.log(user)
   useEffect(() => {
     setTodos(initialTodos)
-    setIncomesExpenese(initialIncomesExpenese)
+    setIncExpens(initialIncomesExpenese)
   }, [])
 
   return (
@@ -82,7 +82,7 @@ export async function getServerSideProps({ req, res }) {
       props: {
         initialTodos: minifyRecords(todos),
         user: session?.user || null,
-        initialIncomesExpenese: minifyRecordsIncomeExpenses(incomesExpenses),
+        initialIncomesExpenese: minifyRecords(incomesExpenses),
       },
     }
   } catch (err) {

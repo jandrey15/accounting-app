@@ -4,6 +4,7 @@ const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
 )
 
 const table = base(process.env.AIRTABLE_TABLE_NAME)
+const tableIncomeExpenses = base(process.env.AIRTABLE_TABLE_INCOME_NAME)
 
 const getMinifiedRecord = (record) => {
   // console.log(record)
@@ -21,4 +22,4 @@ const minifyRecords = (records) => {
   return records.map((record) => getMinifiedRecord(record))
 }
 
-export { table, getMinifiedRecord, minifyRecords }
+export { table, getMinifiedRecord, minifyRecords, tableIncomeExpenses }

@@ -3,13 +3,14 @@ import { createContext, useState } from 'react'
 const IncExpensContext = createContext()
 
 const IncExpensProvider = ({ children }) => {
-  const [todos, setIncExpens] = useState([])
+  const [incomesExpenses, setIncExpens] = useState([])
 
   const refreshIncExpens = async () => {
     try {
       const res = await fetch('/api/getIncomeExpenses')
-      const latestTodos = await res.json()
-      setIncExpens(latestTodos)
+      const latestIncExpens = await res.json()
+      // console.log('data -> ', latestIncExpens)
+      setIncExpens(latestIncExpens)
     } catch (err) {
       console.error(err)
     }
@@ -70,12 +71,9 @@ const IncExpensProvider = ({ children }) => {
   return (
     <IncExpensContext.Provider
       value={{
-        todos,
+        incomesExpenses,
         setIncExpens,
         refreshIncExpens,
-        updateTodo,
-        deleteTodo,
-        addTodo,
       }}
     >
       {children}
