@@ -16,11 +16,23 @@ const IncExpensProvider = ({ children }) => {
     }
   }
 
-  const addTodo = async (description) => {
+  const addIncomeExpense = async ({
+    fecha,
+    concepto,
+    description,
+    cantidad,
+    categoria,
+  }) => {
     try {
-      const res = await fetch('/api/createTodo', {
+      const res = await fetch('/api/createIncomeExpense', {
         method: 'POST',
-        body: JSON.stringify({ description }),
+        body: JSON.stringify({
+          fecha,
+          concepto,
+          description,
+          cantidad,
+          categoria,
+        }),
         headers: { 'Content-Type': 'application/json' },
       })
       const newTodo = await res.json()
@@ -72,6 +84,7 @@ const IncExpensProvider = ({ children }) => {
     <IncExpensContext.Provider
       value={{
         incomesExpenses,
+        addIncomeExpense,
         setIncExpens,
         refreshIncExpens,
       }}

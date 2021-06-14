@@ -8,6 +8,7 @@ import { TodosContext } from '../contexts/TodosContext'
 import { IncExpensContext } from '../contexts/IncomesExpensesContext'
 import auth0 from './api/utils/auth0'
 import TodoForm from '../components/TodoForm'
+import IncomeExpenseForm from '../components/IncomeExpenseForm'
 
 export default function Home({
   initialTodos,
@@ -40,6 +41,7 @@ export default function Home({
             </ul>
 
             <h3>Incomes & Expenses</h3>
+            <IncomeExpenseForm />
             <ul>
               {incomesExpenses &&
                 incomesExpenses.map((incomeExpense) => (
