@@ -30,17 +30,18 @@ export default function IncomeExpenseForm() {
         <label className='font-bold mb-2 text-gray-800' htmlFor='todo'>
           Concepto
         </label>
-        <input
-          type='text'
+        <select
           name='concepto'
           id='concepto'
           value={incomeExpense.concepto || ''}
           onChange={(e) =>
             setIncomeExpense({ ...incomeExpense, concepto: e.target.value })
           }
-          placeholder='Ex. income or expense'
           className='border border-gray-200 p-2 rounded-lg appearance-none focus:outline-none focus:border-gray-500'
-        />
+        >
+          <option value='Gasto'>Gasto</option>
+          <option value='Ingreso'>Ingreso</option>
+        </select>
         <label className='font-bold mb-2 text-gray-800' htmlFor='todo'>
           Descripción
         </label>
@@ -59,39 +60,56 @@ export default function IncomeExpenseForm() {
           Cantidad
         </label>
         <input
-          type='number'
+          type='text'
           name='amount'
           id='amount'
           value={incomeExpense.cantidad || ''}
-          onChange={(e) =>
-            setIncomeExpense({ ...incomeExpense, cantidad: e.target.value })
-          }
+          onChange={(e) => {
+            let amount = e.target.value.replaceAll('.', '')
+
+            if (!isNaN(amount)) {
+              // console.log('this amount 1 -> ' + amount)
+              amount = new Intl.NumberFormat('es-CO').format(amount)
+              // console.log(amount)
+              setIncomeExpense({
+                ...incomeExpense,
+                cantidad: amount,
+              })
+            }
+          }}
           placeholder='Ex. amount'
           className='border border-gray-200 p-2 rounded-lg appearance-none focus:outline-none focus:border-gray-500'
         />
-        <label className='font-bold mb-2 text-gray-800' htmlFor='todo'>
-          Categorias
-        </label>
-        <select
-          name='categoria'
-          id='categoria'
-          value={incomeExpense.categoria || ''}
-          onChange={(e) =>
-            setIncomeExpense({ ...incomeExpense, categoria: e.target.value })
-          }
-          className='border border-gray-200 p-2 rounded-lg appearance-none focus:outline-none focus:border-gray-500'
-        >
-          <option value='Hogar'>Hogar</option>
-          <option value='Transporte'>Transporte</option>
-          <option value='Entretenimiento y diversión'>
-            Entretenimiento y diversión
-          </option>
-          <option value='Alimentación'>Alimentación</option>
-          <option value='Vestuario'>Vestuario</option>
-          <option value='Educación'>Educación</option>
-          <option value='Comunicaciones'>Comunicaciones</option>
-          <option value='Salud y autocuidado'>Salud y autocuidado</option>
-        </select>
+        {incomeExpense.concepto === 'Gasto' && (
+          <>
+            <label className='font-bold mb-2 text-gray-800' htmlFor='todo'>
+              Categorias
+            </label>
+            <select
+              name='categoria'
+              id='categoria'
+              value={incomeExpense.categoria || ''}
+              onChange={(e) =>
+                setIncomeExpense({
+                  ...incomeExpense,
+                  categoria: e.target.value,
+                })
+              }
+              className='border border-gray-200 p-2 rounded-lg appearance-none focus:outline-none focus:border-gray-500'
+            >
+              <option value='Hogar'>Hogar</option>
+              <option value='Transporte'>Transporte</option>
+              <option value='Entretenimiento y diversión'>
+                Entretenimiento y diversión
+              </option>
+              <option value='Alimentación'>Alimentación</option>
+              <option value='Vestuario'>Vestuario</option>
+              <option value='Educación'>Educación</option>
+              <option value='Comunicaciones'>Comunicaciones</option>
+              <option value='Salud y autocuidado'>Salud y autocuidado</option>
+            </select>
+          </>
+        )}
       </div>
       <button
         type='submit'
