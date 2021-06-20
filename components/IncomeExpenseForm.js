@@ -65,11 +65,15 @@ export default function IncomeExpenseForm() {
           id='amount'
           value={incomeExpense.cantidad || ''}
           onChange={(e) => {
-            let amount = e.target.value.replaceAll('.', '')
+            let amount = e.target.value.replaceAll('.', '').replace('$', '')
 
             if (!isNaN(amount)) {
               // console.log('this amount 1 -> ' + amount)
-              amount = new Intl.NumberFormat('es-CO').format(amount)
+              amount = new Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                maximumFractionDigits: 0,
+              }).format(amount)
               // console.log(amount)
               setIncomeExpense({
                 ...incomeExpense,
