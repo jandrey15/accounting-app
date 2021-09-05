@@ -4,7 +4,7 @@ import auth0 from './utils/auth0'
 export default auth0.withApiAuthRequired(async (req, res) => {
   const { fecha, concepto, description, cantidad, categoria } = req.body
   const { user } = await auth0.getSession(req, res)
-  let newCantidad = Number(cantidad.replace('$', '').replace('.', '').trim())
+  let newCantidad = Number(cantidad.replace('$', '').replaceAll('.', '').trim())
   // console.log(categoria)
   let newCategoria = ''
 

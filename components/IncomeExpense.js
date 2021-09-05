@@ -20,7 +20,8 @@ export default function IncomeExpense({ incomeExpense }) {
       <p>{incomeExpense.fields.fecha}</p>
       <p>{incomeExpense.fields.concepto}</p>
       <p>{incomeExpense.fields.description}</p>
-      <h4>{new Intl.NumberFormat().format(incomeExpense.fields.cantidad)}</h4>
+      <h4>${new Intl.NumberFormat().format(incomeExpense.fields.cantidad)}</h4>
+      <p>{incomeExpense.fields.categorias}</p>
     </li>
   )
 }
