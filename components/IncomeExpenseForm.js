@@ -2,13 +2,13 @@ import React, { useState, useContext } from 'react'
 import { IncExpensContext } from '../contexts/IncomesExpensesContext'
 
 export default function IncomeExpenseForm() {
-  const [incomeExpense, setIncomeExpense] = useState({})
+  const [incomeExpense, setIncomeExpense] = useState({ concepto: 'Gasto' })
   const { addIncomeExpense } = useContext(IncExpensContext)
 
   const handleSubmit = (e) => {
     e.preventDefault()
     addIncomeExpense(incomeExpense)
-    setIncomeExpense({})
+    setIncomeExpense({ concepto: 'Gasto' })
   }
 
   return (
@@ -33,7 +33,7 @@ export default function IncomeExpenseForm() {
         <select
           name='concepto'
           id='concepto'
-          value={incomeExpense.concepto || ''}
+          value={incomeExpense.concepto || 'Gasto'}
           onChange={(e) =>
             setIncomeExpense({ ...incomeExpense, concepto: e.target.value })
           }
