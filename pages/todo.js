@@ -1,18 +1,18 @@
 import Head from 'next/head'
 import { useEffect, useContext } from 'react'
 import Navbar from '../components/Navbar'
-import IncomeExpense from '../components/IncomeExpense'
-import { minifyRecords, tableIncomeExpenses } from './api/utils/Airtable'
-import { IncExpensContext } from '../contexts/IncomesExpensesContext'
+import Todo from '../components/Todo'
+import { minifyRecords, table } from './api/utils/Airtable'
+import { TodosContext } from '../contexts/TodosContext'
 import auth0 from './api/utils/auth0'
-import IncomeExpenseForm from '../components/IncomeExpenseForm'
+import TodoForm from '../components/TodoForm'
 
-export default function Home({ user, initialIncomesExpenese = [] }) {
-  const { incomesExpenses, setIncExpens } = useContext(IncExpensContext)
+export default function Home({ initialTodos, user }) {
+  const { todos, setTodos } = useContext(TodosContext)
   // console.log(initialTodos)
   console.log(user)
   useEffect(() => {
-    setIncExpens(initialIncomesExpenese)
+    setTodos(initialTodos)
   }, [])
 
   return (
@@ -25,16 +25,10 @@ export default function Home({ user, initialIncomesExpenese = [] }) {
       <main>
         {user && (
           <>
-            <h1 className='text-2xl text-center mb-4'>Incomes & Expenses</h1>
-            <IncomeExpenseForm />
+            <h1 className='text-2xl text-center mb-4'>Accounting App</h1>
+            <TodoForm />
             <ul>
-              {incomesExpenses &&
-                incomesExpenses.map((incomeExpense) => (
-                  <IncomeExpense
-                    key={incomeExpense.id}
-                    incomeExpense={incomeExpense}
-                  />
-                ))}
+              {todos && todos.map((todo) => <Todo key={todo.id} todo={todo} />)}
             </ul>
           </>
         )}
@@ -47,11 +41,11 @@ export default function Home({ user, initialIncomesExpenese = [] }) {
 export async function getServerSideProps({ req, res }) {
   const session = await auth0.getSession(req, res)
   // console.log(session)
-  let incomesExpenses = []
+  let todos = []
 
   try {
     if (session?.user) {
-      incomesExpenses = await tableIncomeExpenses
+      todos = await table
         .select({
           filterByFormula: `userId = '${session.user.sub}'`,
         })
@@ -60,8 +54,8 @@ export async function getServerSideProps({ req, res }) {
 
     return {
       props: {
+        initialTodos: minifyRecords(todos),
         user: session?.user || null,
-        initialIncomesExpenese: minifyRecords(incomesExpenses),
       },
     }
   } catch (err) {
