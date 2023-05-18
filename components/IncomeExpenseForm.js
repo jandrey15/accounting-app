@@ -13,9 +13,9 @@ export default function IncomeExpenseForm() {
 
   return (
     <>
-      <form class='w-full max-w-lg'>
-        <div class='flex flex-wrap -mx-3 mb-2'>
-          <div class='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
+      <form className='w-full max-w-lg' onSubmit={handleSubmit}>
+        <div className='flex flex-wrap -mx-3 mb-2'>
+          <div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
             <label
               className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
               htmlFor='fecha'
@@ -33,7 +33,7 @@ export default function IncomeExpenseForm() {
               className='appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
             />
           </div>
-          <div class='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
+          <div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
             <label
               className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
               htmlFor='concepto'
@@ -56,9 +56,9 @@ export default function IncomeExpenseForm() {
                 <option value='Gasto'>Gasto</option>
                 <option value='Ingreso'>Ingreso</option>
               </select>
-              <div class='pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700'>
+              <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700'>
                 <svg
-                  class='fill-current h-4 w-4'
+                  className='fill-current h-4 w-4'
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 20 20'
                 >
@@ -67,7 +67,7 @@ export default function IncomeExpenseForm() {
               </div>
             </div>
           </div>
-          <div class='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
+          <div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
             <label
               className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
               htmlFor='description'
@@ -91,8 +91,8 @@ export default function IncomeExpenseForm() {
           </div>
         </div>
 
-        <div class='flex flex-wrap -mx-3 mb-2'>
-          <div class='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
+        <div className='flex flex-wrap -mx-3 mb-2'>
+          <div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
             {incomeExpense.concepto === 'Gasto' && (
               <>
                 <label
@@ -126,10 +126,11 @@ export default function IncomeExpenseForm() {
                     <option value='Salud y autocuidado'>
                       Salud y autocuidado
                     </option>
+                    <option value='Otra'>Otra</option>
                   </select>
-                  <div class='pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700'>
+                  <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700'>
                     <svg
-                      class='fill-current h-4 w-4'
+                      className='fill-current h-4 w-4'
                       xmlns='http://www.w3.org/2000/svg'
                       viewBox='0 0 20 20'
                     >
@@ -140,7 +141,7 @@ export default function IncomeExpenseForm() {
               </>
             )}
           </div>
-          <div class='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
+          <div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
             <label
               className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
               htmlFor='amount'
@@ -173,7 +174,7 @@ export default function IncomeExpenseForm() {
               className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
             />
           </div>
-          <div class='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
+          <div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
             <button
               type='submit'
               className='w-full rounded bg-blue-500 hover:bg-blue-600 text-white py-2 px-4'

@@ -27,15 +27,9 @@ export default function Home({ user, initialIncomesExpenese = [] }) {
           <>
             <h1 className='text-2xl text-center mb-4'>Incomes & Expenses</h1>
             <IncomeExpenseForm />
-            <ul>
-              {incomesExpenses &&
-                incomesExpenses.map((incomeExpense) => (
-                  <IncomeExpense
-                    key={incomeExpense.id}
-                    incomeExpense={incomeExpense}
-                  />
-                ))}
-            </ul>
+            {incomesExpenses && (
+              <IncomeExpense incomesExpenses={incomesExpenses} />
+            )}
           </>
         )}
         {!user && <p>You should log in to save your TODOS</p>}
