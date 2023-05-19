@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { IncExpensContext } from '../contexts/IncomesExpensesContext'
+import { categorys } from '../utils/consts'
 
 export default function IncomeExpenseForm() {
   const [incomeExpense, setIncomeExpense] = useState({ concepto: 'Gasto' })
@@ -13,7 +14,7 @@ export default function IncomeExpenseForm() {
 
   return (
     <>
-      <form className='w-full max-w-lg' onSubmit={handleSubmit}>
+      <form className='w-full max-w-full' onSubmit={handleSubmit}>
         <div className='flex flex-wrap -mx-3 mb-2'>
           <div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
             <label
@@ -74,7 +75,22 @@ export default function IncomeExpenseForm() {
             >
               Descripción
             </label>
-            <input
+            <textarea
+              name='description'
+              id='description'
+              cols='30'
+              rows='10'
+              value={incomeExpense.description || ''}
+              onChange={(e) =>
+                setIncomeExpense({
+                  ...incomeExpense,
+                  description: e.target.value,
+                })
+              }
+              placeholder='Ex. description'
+              className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 resize-none'
+            ></textarea>
+            {/* <input
               type='text'
               name='description'
               id='description'
@@ -87,7 +103,7 @@ export default function IncomeExpenseForm() {
               }
               placeholder='Ex. description'
               className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-            />
+            /> */}
           </div>
         </div>
 
@@ -114,19 +130,9 @@ export default function IncomeExpenseForm() {
                     }
                     className='block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
                   >
-                    <option value='Hogar'>Hogar</option>
-                    <option value='Transporte'>Transporte</option>
-                    <option value='Entretenimiento y diversión'>
-                      Entretenimiento y diversión
-                    </option>
-                    <option value='Alimentación'>Alimentación</option>
-                    <option value='Vestuario'>Vestuario</option>
-                    <option value='Educación'>Educación</option>
-                    <option value='Comunicaciones'>Comunicaciones</option>
-                    <option value='Salud y autocuidado'>
-                      Salud y autocuidado
-                    </option>
-                    <option value='Otra'>Otra</option>
+                    {categorys.map((category) => (
+                      <option value={category}>{category}</option>
+                    ))}
                   </select>
                   <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700'>
                     <svg
