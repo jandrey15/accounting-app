@@ -1,4 +1,4 @@
-import { table, getMinifiedRecord } from './utils/Airtable'
+import { tableTodo, getMinifiedRecord } from './utils/Airtable'
 import auth0 from './utils/auth0'
 import OwnsRecord from './middleware/OwnsRecord'
 
@@ -7,7 +7,7 @@ export default OwnsRecord(async (req, res) => {
   const { user } = await auth0.getSession(req, res)
 
   try {
-    const deletedRecords = await table.destroy([id])
+    const deletedRecords = await tableTodo.destroy([id])
     res.statusCode = 200
     res.json(getMinifiedRecord(deletedRecords[0]))
   } catch (err) {

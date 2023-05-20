@@ -1,4 +1,4 @@
-import { table, minifyRecords } from './utils/AirtableIncomeExpenses'
+import { tableIncomeExpenses, minifyRecords } from './utils/Airtable'
 // Create new table
 import auth0 from './utils/auth0'
 
@@ -6,7 +6,7 @@ export default auth0.withApiAuthRequired(async (req, res) => {
   const { user } = await auth0.getSession(req, res)
 
   try {
-    const records = await table
+    const records = await tableIncomeExpenses
       .select({
         filterByFormula: `userId = '${user.sub}'`,
       })

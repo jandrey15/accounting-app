@@ -1,4 +1,4 @@
-import { table, getMinifiedRecord } from './utils/Airtable'
+import { tableTodo, getMinifiedRecord } from './utils/Airtable'
 import auth0 from './utils/auth0'
 import OwnsRecord from './middleware/OwnsRecord'
 
@@ -7,7 +7,7 @@ export default OwnsRecord(async (req, res) => {
   const { user } = await auth0.getSession(req, res)
 
   try {
-    const updateRecords = await table.update([{ id, fields }])
+    const updateRecords = await tableTodo.update([{ id, fields }])
     res.statusCode = 200
     res.json(getMinifiedRecord(updateRecords[0]))
   } catch (err) {

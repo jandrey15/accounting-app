@@ -1,26 +1,38 @@
 import React from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 // rfc -> react function component - extensions
 
 export default function Navbar({ user }) {
+  const router = useRouter()
+  const pathname = router.pathname
+
+  const border = 'border-l border-t border-r'
+  const margin = '-mb-px'
+  console.log(pathname)
+
   return (
-    <nav className='flex justify-between items-center py-4'>
+    <nav className='flex md:justify-between items-center py-4 flex-wrap justify-center gap-3'>
       <p className='text-2xl font-bold text-grey-800'>Personal Accounting</p>
       <ul className='flex border-b'>
-        <li className='-mb-px mr-1'>
+        <li className={`${pathname === '/' && margin} mr-1`}>
           <Link href='/'>
             <a
-              className='bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-700 font-semibold'
+              className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold ${
+                pathname === '/' && border
+              }`}
               href='#'
             >
               Home
             </a>
           </Link>
         </li>
-        <li className='mr-1'>
+        <li className={`${pathname === '/todo' && margin} mr-1`}>
           <Link href='/todo'>
             <a
-              className='bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold'
+              className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold ${
+                pathname === '/todo' && border
+              }`}
               href='#'
             >
               Todo
@@ -31,7 +43,7 @@ export default function Navbar({ user }) {
           {user && (
             <a
               href='/api/logout'
-              className='bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold'
+              className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold`}
             >
               Logout
             </a>
@@ -40,7 +52,7 @@ export default function Navbar({ user }) {
           {!user && (
             <a
               href='/api/login'
-              className='bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold'
+              className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold`}
             >
               Login
             </a>

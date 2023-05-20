@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { useEffect, useContext } from 'react'
 import Navbar from '../components/Navbar'
 import Todo from '../components/Todo'
-import { minifyRecords, table } from './api/utils/Airtable'
+import { minifyRecords, tableTodo } from './api/utils/Airtable'
 import { TodosContext } from '../contexts/TodosContext'
 import auth0 from './api/utils/auth0'
 import TodoForm from '../components/TodoForm'
@@ -45,7 +45,7 @@ export async function getServerSideProps({ req, res }) {
 
   try {
     if (session?.user) {
-      todos = await table
+      todos = await tableTodo
         .select({
           filterByFormula: `userId = '${session.user.sub}'`,
         })
