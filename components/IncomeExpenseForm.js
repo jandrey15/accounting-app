@@ -149,7 +149,7 @@ export default function IncomeExpenseForm() {
               type='submit'
               className='w-full rounded bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 '
             >
-              Submit
+              Guardar
             </button>
           </div>
           <div className='w-full max-w-[613px] px-3 mb-6 md:mb-0'>
