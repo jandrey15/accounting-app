@@ -10,6 +10,7 @@ import {
 import { IncExpensContext } from '../contexts/IncomesExpensesContext'
 import auth0 from './api/utils/auth0'
 import IncomeExpenseForm from '../components/IncomeExpenseForm'
+import Totales from '../components/Totales'
 
 export default function Home({
   user,
@@ -36,12 +37,10 @@ export default function Home({
           <>
             <h1 className='text-2xl text-center mb-4'>Incomes & Expenses</h1>
             <IncomeExpenseForm />
-            <p>
-              Total Ingresos: ${new Intl.NumberFormat().format(incomesTotal)}
-            </p>
-            <p>
-              Total Gastos: ${new Intl.NumberFormat().format(expensesTotal)}
-            </p>
+            <Totales
+              incomesTotal={incomesTotal}
+              expensesTotal={expensesTotal}
+            />
             {incomesExpenses && (
               <IncomeExpense incomesExpenses={incomesExpenses} />
             )}
@@ -74,35 +73,9 @@ export async function getServerSideProps({ req, res }) {
         userId,
       })
 
-      const expensesTotalPromise = new Promise((resolve, reject) => {
-        let out = 0
-        tableIncomeExpenses
-          .select({
-            filterByFormula: `AND(concepto = 'Gasto', userId = '${session.user.sub}')`,
-          })
-          .eachPage(
-            function page(records, fetchNextPage) {
-              // This function (`page`) will get called for each page of records.
-
-              records.forEach(function (record) {
-                // console.log('Retrieved', record.get('cantidad'))
-                out = out + Number(record.get('cantidad'))
-              })
-
-              // To fetch the next page of records, call `fetchNextPage`.
-              // If there are more records, `page` will get called again.
-              // If there are no more records, `done` will get called.
-              fetchNextPage()
-            },
-            function done(err) {
-              if (err) {
-                console.error(err)
-                reject(err)
-              } else {
-                resolve(out)
-              }
-            }
-          )
+      const expensesTotalPromise = await minifyRecordsTotales({
+        type: 'Gasto',
+        userId,
       })
 
       expensesTotal = await expensesTotalPromise

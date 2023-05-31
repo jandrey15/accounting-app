@@ -34,27 +34,6 @@ export default function IncomeExpense({ incomesExpenses }) {
   //   updateTodo(updatedTodo)
   // }
 
-  /*
-    <ul>
-      {incomesExpenses.map((incomeExpense) => {
-        return (
-          <li
-            key={incomeExpense.id}
-            className='bg-white flex items-center shadow-lg rounded-lg my-2 py-2 px-4'
-          >
-            <p>{incomeExpense.fields.fecha}</p>
-            <p>{incomeExpense.fields.concepto}</p>
-            <p>{incomeExpense.fields.description}</p>
-            <h4>
-              ${new Intl.NumberFormat().format(incomeExpense.fields.cantidad)}
-            </h4>
-            <p>{incomeExpense.fields.categorias}</p>
-          </li>
-        )
-      })}
-    </ul>
-  */
-
   return (
     <Card>
       <MultiSelectBox
@@ -86,7 +65,7 @@ export default function IncomeExpense({ incomesExpenses }) {
               <TableRow key={item.id}>
                 <TableCell>{item.fields.fecha}</TableCell>
                 <TableCell>{item.fields.description}</TableCell>
-                <TableCell>{item.fields.categorias}</TableCell>
+                <TableCell>{item.fields.categorias || 'No aplica'}</TableCell>
                 <TableCell className='text-right'>
                   ${new Intl.NumberFormat().format(item.fields.cantidad)}
                 </TableCell>
