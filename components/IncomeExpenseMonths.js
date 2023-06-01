@@ -53,11 +53,15 @@ export default function IncomeExpense({ incomesExpenses }) {
             .map((item) => (
               <TableRow key={item.month}>
                 <TableCell>{item.month}</TableCell>
-                <TableCell>{item.total}</TableCell>
-                <TableCell>{item.total || 'No aplica'}</TableCell>
-                <TableCell className='text-right'>
-                  ${new Intl.NumberFormat().format(200000)}
+                <TableCell>
+                  ${new Intl.NumberFormat().format(item.ingreso)}
                 </TableCell>
+                <TableCell>
+                  ${new Intl.NumberFormat().format(item.gasto)}
+                </TableCell>
+                {/* <TableCell className='text-right'>
+                  ${new Intl.NumberFormat().format(200000)}
+                </TableCell> */}
 
                 <TableCell className='text-right'>
                   <BadgeDelta

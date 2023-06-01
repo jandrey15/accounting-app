@@ -103,9 +103,39 @@ export async function getServerSideProps({ req, res }) {
       let incomesTotalMonths = await incomesTotalMonthsPromise
       let expensesTotalMonths = await expensesTotalMonthsPromise
 
+      totalesIncomesExpensesMonths = incomesTotalMonths.map((item, index) => {
+        console.log(item)
+        console.log(expensesTotalMonths[index])
+        const expenseMonth = expensesTotalMonths[index]?.month
+        const incomeMonth = item.month
+        if (incomeMonth === expenseMonth) {
+          return {
+            month: item.month,
+            ingreso: item.total,
+            gasto: expensesTotalMonths[index].total,
+          }
+        }
+      })
+
       // console.log({ incomesTotalMonths, expensesTotalMonths })
-      totalesIncomesExpensesMonths =
-        incomesTotalMonths.concat(expensesTotalMonths)
+      // totalesIncomesExpensesMonths =
+      //   incomesTotalMonths.concat(expensesTotalMonths)
+      // const testData = []
+      // totalesIncomesExpensesMonths.forEach((item) => {
+      //   // const month = testData.filter((month) => month.month === item.month)
+      //   // console.log(month)
+      //   testData.push({
+      //     month: item.month,
+      //     ingreso: item.total,
+      //     gasto: item.total,
+      //   })
+      //   // return {
+      //   //   month,
+      //   //   ingreso,
+      //   //   gasto
+      //   // }
+      // })
+      // console.log(testData)
       // console.log(totalesIncomesExpensesMonths)
     }
 
