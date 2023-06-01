@@ -16,18 +16,17 @@ import {
 import { meses } from '../utils/consts'
 
 export default function IncomeExpense({ incomesExpenses }) {
-  const [selectedCategory, setSelectedCategory] = useState([])
+  const [selectedMonth, setSelectedMonth] = useState([])
 
   const isCategorySelected = (category) =>
-    selectedCategory.includes(category?.fields.categorias) ||
-    selectedCategory.length === 0
+    selectedMonth.includes(category?.month) || selectedMonth.length === 0
   // console.log(incomeExpense)
 
   return (
-    <Card>
+    <Card className='mt-6'>
       <MultiSelectBox
-        onValueChange={(value) => setSelectedCategory(value)}
-        placeholder='Seleccione una categoría...'
+        onValueChange={(value) => setSelectedMonth(value)}
+        placeholder='Seleccione un mes...'
         className='max-w-xs'
       >
         {meses.map((item) => (
@@ -52,24 +51,22 @@ export default function IncomeExpense({ incomesExpenses }) {
           {incomesExpenses
             .filter((item) => isCategorySelected(item))
             .map((item) => (
-              <TableRow key={item.id}>
-                <TableCell>{item.fields.fecha}</TableCell>
-                <TableCell>{item.fields.description}</TableCell>
-                <TableCell>{item.fields.categorias || 'No aplica'}</TableCell>
+              <TableRow key={item.month}>
+                <TableCell>{item.month}</TableCell>
+                <TableCell>{item.total}</TableCell>
+                <TableCell>{item.total || 'No aplica'}</TableCell>
                 <TableCell className='text-right'>
-                  ${new Intl.NumberFormat().format(item.fields.cantidad)}
+                  ${new Intl.NumberFormat().format(200000)}
                 </TableCell>
 
                 <TableCell className='text-right'>
                   <BadgeDelta
                     deltaType={
-                      item.fields.concepto === 'Ingreso'
-                        ? 'increase'
-                        : 'decrease'
+                      item.type === 'Ingreso' ? 'increase' : 'decrease'
                     }
                     size='xs'
                   >
-                    {item.fields.concepto}
+                    {item.type}
                   </BadgeDelta>
                 </TableCell>
               </TableRow>
