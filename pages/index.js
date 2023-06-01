@@ -58,6 +58,7 @@ export async function getServerSideProps({ req, res }) {
   let incomesExpenses = []
   let incomesTotal = 0
   let expensesTotal = 0
+  let incomeExpenseMonths = []
 
   try {
     if (session?.user) {
@@ -80,6 +81,27 @@ export async function getServerSideProps({ req, res }) {
 
       expensesTotal = await expensesTotalPromise
       incomesTotal = await incomesTotalPromise
+
+      incomeExpenseMonths = await tableIncomeExpenses
+        .select({
+          filterByFormula: `AND(concepto = 'Gasto', userId = '${userId}')`,
+        })
+        .firstPage()
+      const year = new Date().getFullYear().toString()
+      let totalMonth = 0
+
+      incomeExpenseMonths.forEach((item) => {
+        console.log(item.fields)
+        if (year === item.fields.year) {
+          console.log(item.fields)
+          if (item.fields.mes === 'May') {
+            console.log('ok paso..')
+            totalMonth = totalMonth + item.fields.cantidad
+          }
+        }
+      })
+      console.log(totalMonth)
+      // console.info({ incomeExpenseMonths })
     }
 
     return {
