@@ -13,13 +13,16 @@ import {
   MultiSelectBox,
   MultiSelectBoxItem,
 } from '@tremor/react'
-import { meses } from '../utils/consts'
+import { traslateMonths, months } from '../utils/consts'
 
 export default function IncomeExpense({ incomesExpenses }) {
   const [selectedMonth, setSelectedMonth] = useState([])
 
-  const isCategorySelected = (category) =>
-    selectedMonth.includes(category?.month) || selectedMonth.length === 0
+  const isCategorySelected = (category) => {
+    // console.log({ category })
+    // console.log({ selectedMonth })
+    return selectedMonth.includes(category?.month) || selectedMonth.length === 0
+  }
   // console.log(incomeExpense)
 
   return (
@@ -29,8 +32,12 @@ export default function IncomeExpense({ incomesExpenses }) {
         placeholder='Seleccione un mes...'
         className='max-w-xs'
       >
-        {meses.map((item) => (
-          <MultiSelectBoxItem key={item} value={item} text={item} />
+        {months.map((item) => (
+          <MultiSelectBoxItem
+            key={item}
+            value={item}
+            text={traslateMonths[item]}
+          />
         ))}
       </MultiSelectBox>
       <Table className='mt-6'>
@@ -49,15 +56,15 @@ export default function IncomeExpense({ incomesExpenses }) {
 
         <TableBody>
           {incomesExpenses
-            .filter((item) => isCategorySelected(item))
+            .filter((item, index) => isCategorySelected(item, index))
             .map((item) => (
               <TableRow key={item.month}>
-                <TableCell>{item.month}</TableCell>
-                <TableCell>
-                  ${new Intl.NumberFormat().format(item.ingreso)}
+                <TableCell>{traslateMonths[item.month]}</TableCell>
+                <TableCell className='text-right'>
+                  ${new Intl.NumberFormat('es-CO').format(item.ingreso)}
                 </TableCell>
-                <TableCell>
-                  ${new Intl.NumberFormat().format(item.gasto)}
+                <TableCell className='text-right'>
+                  ${new Intl.NumberFormat('es-CO').format(item.gasto)}
                 </TableCell>
                 {/* <TableCell className='text-right'>
                   ${new Intl.NumberFormat().format(200000)}
@@ -66,11 +73,18 @@ export default function IncomeExpense({ incomesExpenses }) {
                 <TableCell className='text-right'>
                   <BadgeDelta
                     deltaType={
-                      item.type === 'Ingreso' ? 'increase' : 'decrease'
+                      item.ingreso - item.gasto > 0
+                        ? 'increase'
+                        : item.ingreso - item.gasto === 0
+                        ? 'unchanged'
+                        : 'decrease'
                     }
                     size='xs'
                   >
-                    {item.type}
+                    $
+                    {new Intl.NumberFormat('es-CO').format(
+                      item.ingreso - item.gasto
+                    )}
                   </BadgeDelta>
                 </TableCell>
               </TableRow>

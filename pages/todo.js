@@ -16,13 +16,13 @@ export default function Home({ initialTodos, user }) {
   }, [])
 
   return (
-    <section>
+    <section className='container'>
       <Head>
         <title>Personal Accounting App</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Navbar user={user} />
-      <main>
+      <main className='w-11/12 m-auto md:max-w-full'>
         {user && (
           <>
             <h1 className='text-2xl text-center mb-4'>Accounting App</h1>

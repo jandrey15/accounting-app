@@ -25,10 +25,11 @@ const minifyRecords = (records) => {
 
 const minifyRecordsTotales = ({ type, userId }) => {
   return new Promise((resolve, reject) => {
+    const year = new Date().getFullYear().toString()
     let out = 0
     tableIncomeExpenses
       .select({
-        filterByFormula: `AND(concepto = '${type}', userId = '${userId}') `,
+        filterByFormula: `AND(concepto = '${type}', userId = '${userId}', year = '${year}') `,
       })
       .eachPage(
         function page(records, fetchNextPage) {
@@ -64,7 +65,7 @@ const minifyRecordsTotalesMonths = ({ type, userId }) => {
 
     tableIncomeExpenses
       .select({
-        filterByFormula: `AND(concepto = '${type}', userId = '${userId}') `,
+        filterByFormula: `AND(concepto = '${type}', userId = '${userId}', year = '${year}') `,
       })
       .eachPage(
         function page(records, fetchNextPage) {
@@ -74,11 +75,8 @@ const minifyRecordsTotalesMonths = ({ type, userId }) => {
             let total = 0
             records.forEach(function (record) {
               // console.log('Retrieved', record.get('cantidad'))
-              if (year === record.get('year')) {
-                // console.log(item.fields)
-                if (record.get('mes') === month) {
-                  total = total + Number(record.get('cantidad'))
-                }
+              if (record.get('mes') === month) {
+                total = total + Number(record.get('cantidad'))
               }
             })
             totalMonths.push({ month: month, type: type, total })

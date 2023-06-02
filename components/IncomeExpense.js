@@ -20,7 +20,7 @@ export default function IncomeExpense({ incomesExpenses }) {
   const [selectedCategory, setSelectedCategory] = useState([])
 
   const isCategorySelected = (category) =>
-    selectedCategory.includes(category?.fields.categorias) ||
+    selectedCategory.includes(category?.fields?.categorias) ||
     selectedCategory.length === 0
   // console.log(incomeExpense)
 
