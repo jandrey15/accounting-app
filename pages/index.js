@@ -74,6 +74,7 @@ export async function getServerSideProps({ req, res }) {
       const userId = session.user.sub
       incomesExpenses = await tableIncomeExpenses
         .select({
+          sort: [{ field: 'fecha', direction: 'desc' }],
           filterByFormula: `userId = '${userId}'`,
         })
         .firstPage()
