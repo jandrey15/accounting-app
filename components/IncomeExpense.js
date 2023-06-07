@@ -16,7 +16,7 @@ import {
 import { categorys } from '../utils/consts'
 
 export default function IncomeExpense({ incomesExpenses }) {
-  const { updateTodo, deleteTodo } = useContext(IncExpensContext)
+  const { deleteIncomeExpense } = useContext(IncExpensContext)
   const [selectedCategory, setSelectedCategory] = useState([])
 
   const isCategorySelected = (category) =>
@@ -33,6 +33,11 @@ export default function IncomeExpense({ incomesExpenses }) {
 
   //   updateTodo(updatedTodo)
   // }
+
+  const handleDelete = (id) => {
+    console.log('Delete -> ' + id)
+    deleteIncomeExpense(id)
+  }
 
   return (
     <Card>
@@ -63,16 +68,27 @@ export default function IncomeExpense({ incomesExpenses }) {
             .filter((item) => isCategorySelected(item))
             .map((item) => (
               <TableRow key={item.id}>
-                <TableCell>{item.fields?.fecha}</TableCell>
-                <TableCell className='max-w-xs whitespace-pre-wrap'>
+                <TableCell className='flex flex-col gap-2'>
+                  {item.fields?.fecha}
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    type='button'
+                    className='text-white bg-red-700 hover:bg-red-800 focus:outline-none font-medium text-xs px-2 py-1 text-center dark:bg-red-600 dark:hover:bg-red-700'
+                  >
+                    Eliminar
+                  </button>
+                </TableCell>
+                <TableCell className='max-w-xs whitespace-pre-wrap align-top'>
                   {item.fields?.description}
                 </TableCell>
-                <TableCell>{item.fields?.categorias || 'No aplica'}</TableCell>
-                <TableCell className='text-right'>
+                <TableCell className='align-top'>
+                  {item.fields?.categorias || 'No aplica'}
+                </TableCell>
+                <TableCell className='text-right align-top'>
                   ${new Intl.NumberFormat().format(item.fields?.cantidad)}
                 </TableCell>
 
-                <TableCell className='text-right'>
+                <TableCell className='text-right align-top'>
                   <BadgeDelta
                     deltaType={
                       item.fields?.concepto === 'Ingreso'
