@@ -18,10 +18,10 @@ import { traslateMonths, months } from '../utils/consts'
 export default function IncomeExpense({ incomesExpenses }) {
   const [selectedMonth, setSelectedMonth] = useState([])
 
-  const isCategorySelected = (category) => {
-    // console.log({ category })
+  const isMonthSelected = (data) => {
+    // console.log({ data })
     // console.log({ selectedMonth })
-    return selectedMonth.includes(category?.month) || selectedMonth.length === 0
+    return selectedMonth.includes(data?.month) || selectedMonth.length === 0
   }
   // console.log(incomeExpense)
 
@@ -56,7 +56,7 @@ export default function IncomeExpense({ incomesExpenses }) {
 
         <TableBody>
           {incomesExpenses
-            .filter((item, index) => isCategorySelected(item, index))
+            .filter((item) => isMonthSelected(item))
             .map((item) => (
               <TableRow key={item.month}>
                 <TableCell>{traslateMonths[item.month]}</TableCell>

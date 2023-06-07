@@ -14,25 +14,25 @@ import {
   MultiSelectBoxItem,
 } from '@tremor/react'
 import { categorys } from '../utils/consts'
+import { traslateMonths, months } from '../utils/consts'
 
 export default function IncomeExpense({ incomesExpenses }) {
   const { deleteIncomeExpense } = useContext(IncExpensContext)
   const [selectedCategory, setSelectedCategory] = useState([])
+  const [selectedMonth, setSelectedMonth] = useState([])
 
   const isCategorySelected = (category) =>
     selectedCategory.includes(category?.fields?.categorias) ||
     selectedCategory.length === 0
   // console.log(incomeExpense)
 
-  // const handleToggleCompleted = () => {
-  //   const updatedFields = {
-  //     ...todo.fields,
-  //     completed: !todo.fields.completed,
-  //   }
-  //   const updatedTodo = { id: todo.id, fields: updatedFields }
-
-  //   updateTodo(updatedTodo)
-  // }
+  const isMonthSelected = (data) => {
+    console.log({ data })
+    console.log({ selectedMonth })
+    return (
+      selectedMonth.includes(data?.fields?.mes) || selectedMonth.length === 0
+    )
+  }
 
   const handleDelete = (id) => {
     console.log('Delete -> ' + id)
@@ -41,15 +41,30 @@ export default function IncomeExpense({ incomesExpenses }) {
 
   return (
     <Card>
-      <MultiSelectBox
-        onValueChange={(value) => setSelectedCategory(value)}
-        placeholder='Seleccione una categoría...'
-        className='max-w-xs'
-      >
-        {categorys.map((item) => (
-          <MultiSelectBoxItem key={item} value={item} text={item} />
-        ))}
-      </MultiSelectBox>
+      <div className='flex gap-2 items-center md:flex-row flex-col'>
+        <MultiSelectBox
+          onValueChange={(value) => setSelectedCategory(value)}
+          placeholder='Seleccione una categoría...'
+          className='max-w-xs'
+        >
+          {categorys.map((item) => (
+            <MultiSelectBoxItem key={item} value={item} text={item} />
+          ))}
+        </MultiSelectBox>
+        <MultiSelectBox
+          onValueChange={(value) => setSelectedMonth(value)}
+          placeholder='Seleccione un mes...'
+          className='max-w-xs'
+        >
+          {months.map((item) => (
+            <MultiSelectBoxItem
+              key={item}
+              value={item}
+              text={traslateMonths[item]}
+            />
+          ))}
+        </MultiSelectBox>
+      </div>
       <Table className='mt-6'>
         <TableHead>
           <TableRow>
@@ -66,6 +81,7 @@ export default function IncomeExpense({ incomesExpenses }) {
         <TableBody>
           {incomesExpenses
             .filter((item) => isCategorySelected(item))
+            .filter((item) => isMonthSelected(item))
             .map((item) => (
               <TableRow key={item.id}>
                 <TableCell className='flex flex-col gap-2'>
