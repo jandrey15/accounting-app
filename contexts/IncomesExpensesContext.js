@@ -35,9 +35,9 @@ const IncExpensProvider = ({ children }) => {
         }),
         headers: { 'Content-Type': 'application/json' },
       })
-      const newTodo = await res.json()
-      setIncExpens((prevTodos) => {
-        return [newTodo, ...prevTodos]
+      const newIncomeExpense = await res.json()
+      setIncExpens((prevIncomeExpense) => {
+        return [newIncomeExpense, ...prevIncomeExpense]
       })
     } catch (err) {
       console.error(err)
@@ -65,15 +65,17 @@ const IncExpensProvider = ({ children }) => {
     }
   }
 
-  const deleteTodo = async (id) => {
+  const deleteIncomeExpense = async (id) => {
     try {
-      const res = await fetch('/api/deleteTodo', {
+      const res = await fetch('/api/deleteIncomeExpense', {
         method: 'Delete',
         body: JSON.stringify({ id }),
         headers: { 'Content-Type': 'application/json' },
       })
-      setIncExpens((prevTodos) => {
-        return prevTodos.filter((todo) => todo.id !== id)
+      setIncExpens((prevIncomeExpense) => {
+        return prevIncomeExpense.filter(
+          (incomeExpense) => incomeExpense.id !== id
+        )
       })
     } catch (err) {
       console.error(err)
@@ -85,6 +87,7 @@ const IncExpensProvider = ({ children }) => {
       value={{
         incomesExpenses,
         addIncomeExpense,
+        deleteIncomeExpense,
         setIncExpens,
         refreshIncExpens,
       }}

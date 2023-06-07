@@ -8,8 +8,24 @@ export default function IncomeExpenseForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    console.log(incomeExpense.fecha)
+    if (incomeExpense.fecha === '') {
+      alert('Fecha es obligatoria')
+      return
+    }
+
+    if (incomeExpense.description === '') {
+      alert('Descripción es obligatoria')
+      return
+    }
+    console.log(incomeExpense.cantidad)
+    if (!incomeExpense.cantidad || incomeExpense.cantidad === '') {
+      alert('Cantidad es obligatoria')
+      return
+    }
+
     addIncomeExpense(incomeExpense)
-    setIncomeExpense({ concepto: 'Gasto' })
+    // setIncomeExpense({ concepto: 'Gasto' })
   }
 
   return (

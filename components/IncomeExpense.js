@@ -49,7 +49,7 @@ export default function IncomeExpense({ incomesExpenses }) {
         <TableHead>
           <TableRow>
             <TableHeaderCell>Fecha</TableHeaderCell>
-            <TableHeaderCell>Descripción</TableHeaderCell>
+            <TableHeaderCell className='max-w-xs'>Descripción</TableHeaderCell>
             <TableHeaderCell>Categoría</TableHeaderCell>
             <TableHeaderCell className='text-right'>
               Cantidad ($)
@@ -63,23 +63,25 @@ export default function IncomeExpense({ incomesExpenses }) {
             .filter((item) => isCategorySelected(item))
             .map((item) => (
               <TableRow key={item.id}>
-                <TableCell>{item.fields.fecha}</TableCell>
-                <TableCell>{item.fields.description}</TableCell>
-                <TableCell>{item.fields.categorias || 'No aplica'}</TableCell>
+                <TableCell>{item.fields?.fecha}</TableCell>
+                <TableCell className='max-w-xs whitespace-pre-wrap'>
+                  {item.fields?.description}
+                </TableCell>
+                <TableCell>{item.fields?.categorias || 'No aplica'}</TableCell>
                 <TableCell className='text-right'>
-                  ${new Intl.NumberFormat().format(item.fields.cantidad)}
+                  ${new Intl.NumberFormat().format(item.fields?.cantidad)}
                 </TableCell>
 
                 <TableCell className='text-right'>
                   <BadgeDelta
                     deltaType={
-                      item.fields.concepto === 'Ingreso'
+                      item.fields?.concepto === 'Ingreso'
                         ? 'increase'
                         : 'decrease'
                     }
                     size='xs'
                   >
-                    {item.fields.concepto}
+                    {item.fields?.concepto}
                   </BadgeDelta>
                 </TableCell>
               </TableRow>
