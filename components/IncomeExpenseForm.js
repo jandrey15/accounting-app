@@ -25,7 +25,7 @@ export default function IncomeExpenseForm() {
     }
 
     addIncomeExpense(incomeExpense)
-    // setIncomeExpense({ concepto: 'Gasto' })
+    setIncomeExpense({ concepto: 'Gasto' }) // reset form
   }
 
   return (
