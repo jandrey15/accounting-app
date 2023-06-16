@@ -30,9 +30,9 @@ export default function IncomeExpenseForm() {
 
   return (
     <>
-      <form className='w-full max-w-full mb-5' onSubmit={handleSubmit}>
-        <div className='flex flex-wrap mb-2 md:-mx-3 md:gap-y-5'>
-          <div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
+      <form className='w-full max-w-full' onSubmit={handleSubmit}>
+        <div className='grid grid-cols-2 md:-mx-3 md:gap-y-5'>
+          <div className='w-full px-3 mb-6 md:mb-0'>
             <label
               className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
               htmlFor='fecha'
@@ -50,7 +50,7 @@ export default function IncomeExpenseForm() {
               className='appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white'
             />
           </div>
-          <div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
+          <div className='w-full px-3 mb-6 md:mb-0'>
             <label
               className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
               htmlFor='concepto'
@@ -84,7 +84,7 @@ export default function IncomeExpenseForm() {
               </div>
             </div>
           </div>
-          <div className='w-full md:w-1/3 px-3 mb-6 md:mb-0'>
+          <div className='w-full px-3 mb-6 md:mb-0'>
             {incomeExpense.concepto === 'Gasto' && (
               <>
                 <label
@@ -125,7 +125,7 @@ export default function IncomeExpenseForm() {
               </>
             )}
           </div>
-          <div className='w-full md:w-1/3 px-3 mb-6 md:mb-0 flex flex-col justify-between gap-y-5 order-5 md:order-4'>
+          <div className='w-full px-3 mb-6 md:mb-0 flex flex-col justify-between gap-y-5'>
             <div>
               <label
                 className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
@@ -161,12 +161,6 @@ export default function IncomeExpenseForm() {
                 className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
               />
             </div>
-            <button
-              type='submit'
-              className='w-full rounded bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 '
-            >
-              Guardar
-            </button>
           </div>
           <div className='w-full max-w-[613px] px-3 mb-6 md:mb-0'>
             <label
@@ -179,7 +173,7 @@ export default function IncomeExpenseForm() {
               name='description'
               id='description'
               cols='20'
-              rows='6'
+              rows='3'
               value={incomeExpense.description || ''}
               onChange={(e) =>
                 setIncomeExpense({
@@ -190,6 +184,15 @@ export default function IncomeExpenseForm() {
               placeholder='Ex. description'
               className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 resize-none'
             ></textarea>
+          </div>
+
+          <div className='w-full px-3 mb-6 md:mb-0 self-end'>
+            <button
+              type='submit'
+              className='w-full rounded bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 '
+            >
+              Guardar
+            </button>
           </div>
         </div>
 

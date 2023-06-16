@@ -13,6 +13,8 @@ import auth0 from './api/utils/auth0'
 import IncomeExpenseForm from '../components/IncomeExpenseForm'
 import Totales from '../components/Totales'
 import IncomeExpenseMonths from '../components/IncomeExpenseMonths'
+import { useModal } from '../hooks/useModal'
+import Modal from '../components/Modal'
 
 export default function Home({
   user,
@@ -22,6 +24,7 @@ export default function Home({
   totalesIncomesExpensesMonths,
 }) {
   const { incomesExpenses, setIncExpens } = useContext(IncExpensContext)
+  const { openModal, closeModal, showModal } = useModal()
   // console.log(initialTodos)
   // console.log(user)
   useEffect(() => {
@@ -39,7 +42,14 @@ export default function Home({
         {user && (
           <>
             <h1 className='text-2xl text-center mb-4'>Incomes & Expenses</h1>
-            <IncomeExpenseForm />
+            <button
+              type='button'
+              onClick={openModal}
+              className='fixed right-5 bottom-5'
+            >
+              <img src='/agregar.png' alt='Agregar' width={40} height={40} />
+            </button>
+
             <Totales
               incomesTotal={incomesTotal}
               expensesTotal={expensesTotal}
@@ -53,6 +63,9 @@ export default function Home({
                 incomesExpenses={totalesIncomesExpensesMonths}
               />
             )}
+            <Modal show={showModal} onClose={closeModal}>
+              <IncomeExpenseForm />
+            </Modal>
           </>
         )}
         {!user && <p>You should log in to save your TODOS</p>}
