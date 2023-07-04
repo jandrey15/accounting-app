@@ -32,7 +32,7 @@ export default function Home({
   }, [])
 
   return (
-    <section>
+    <section className='min-h-screen flex flex-col justify-between pb-5'>
       <Head>
         <title>Personal Accounting App</title>
         <link rel='icon' href='/favicon.ico' />
@@ -41,7 +41,7 @@ export default function Home({
       <main>
         {user && (
           <>
-            <h1 className='text-2xl text-center mb-4'>Incomes & Expenses</h1>
+            <h1 className='text-2xl text-center mb-4'>Ingresos y Gastos</h1>
             <button
               type='button'
               onClick={openModal}
@@ -68,8 +68,25 @@ export default function Home({
             </Modal>
           </>
         )}
-        {!user && <p>You should log in to save your TODOS</p>}
+
+        {!user && (
+          <>
+            <img
+              src='/accounting.webp'
+              className='w-full h-auto'
+              alt='Accounting'
+            />
+            <p className='text-center'>
+              Inicia sesión para ver los ingresos y gastos.
+            </p>
+          </>
+        )}
       </main>
+
+      <footer className='flex flex-col items-center justify-center gap-2 mt-5'>
+        <h3>Desarrollado por John Serrano</h3>
+        <p>Todos los derechos reservados &copy; 2023</p>
+      </footer>
     </section>
   )
 }

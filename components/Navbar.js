@@ -13,7 +13,7 @@ export default function Navbar({ user }) {
 
   return (
     <nav className='flex md:justify-between items-center py-4 flex-wrap justify-center gap-3'>
-      <p className='text-2xl font-bold text-grey-800'>Personal Accounting</p>
+      <p className='text-2xl font-bold text-grey-800'>Contabilidad Personal</p>
       <ul className='flex border-b'>
         <li className={`${pathname === '/' && margin} mr-1`}>
           <Link href='/'>
@@ -23,7 +23,7 @@ export default function Navbar({ user }) {
               }`}
               href='#'
             >
-              Home
+              Inicio
             </a>
           </Link>
         </li>
@@ -35,7 +35,7 @@ export default function Navbar({ user }) {
               }`}
               href='#'
             >
-              Todo
+              Anotaciones
             </a>
           </Link>
         </li>
@@ -45,7 +45,7 @@ export default function Navbar({ user }) {
               href='/api/logout'
               className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold`}
             >
-              Logout
+              Cerrar Sesión
             </a>
           )}
 
@@ -54,7 +54,7 @@ export default function Navbar({ user }) {
               href='/api/login'
               className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold`}
             >
-              Login
+              Iniciar Sesión
             </a>
           )}
         </li>

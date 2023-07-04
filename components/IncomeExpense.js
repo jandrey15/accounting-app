@@ -19,7 +19,7 @@ import { traslateMonths, months } from '../utils/consts'
 export default function IncomeExpense({ incomesExpenses }) {
   const { deleteIncomeExpense } = useContext(IncExpensContext)
   const [selectedCategory, setSelectedCategory] = useState([])
-  const [selectedMonth, setSelectedMonth] = useState([])
+  const [selectedMonth, setSelectedMonth] = useState(['July'])
 
   const isCategorySelected = (category) =>
     selectedCategory.includes(category?.fields?.categorias) ||
@@ -53,6 +53,7 @@ export default function IncomeExpense({ incomesExpenses }) {
         </MultiSelectBox>
         <MultiSelectBox
           onValueChange={(value) => setSelectedMonth(value)}
+          // defaultValue={() => setSelectedMonth('July')}
           placeholder='Seleccione un mes...'
           className='max-w-xs'
         >
