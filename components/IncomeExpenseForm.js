@@ -2,9 +2,15 @@ import React, { useState, useContext } from 'react'
 import { IncExpensContext } from '../contexts/IncomesExpensesContext'
 import { categorys } from '../utils/consts'
 
-export default function IncomeExpenseForm() {
-  const [incomeExpense, setIncomeExpense] = useState({ concepto: 'Gasto' })
-  const { addIncomeExpense } = useContext(IncExpensContext)
+export default function IncomeExpenseForm({ onCloseModal }) {
+  const date = new Date()
+  const defaultValue = new Date(date).toISOString().split('T')[0]
+
+  const [incomeExpense, setIncomeExpense] = useState({
+    concepto: 'Gasto',
+    fecha: defaultValue,
+  })
+  const { addIncomeExpense, refreshIncExpens } = useContext(IncExpensContext)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -26,6 +32,8 @@ export default function IncomeExpenseForm() {
 
     addIncomeExpense(incomeExpense)
     setIncomeExpense({ concepto: 'Gasto' }) // reset form
+    onCloseModal()
+    // refreshIncExpens()
   }
 
   return (

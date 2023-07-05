@@ -8,7 +8,9 @@ export default auth0.withApiAuthRequired(async (req, res) => {
   try {
     const records = await tableIncomeExpenses
       .select({
+        sort: [{ field: 'fecha', direction: 'desc' }],
         filterByFormula: `userId = '${user.sub}'`,
+        maxRecords: 30,
       })
       .firstPage() // 20 records
     const minifiedRecords = minifyRecords(records)

@@ -19,6 +19,8 @@ import { traslateMonths, months } from '../utils/consts'
 export default function IncomeExpense({ incomesExpenses }) {
   const { deleteIncomeExpense } = useContext(IncExpensContext)
   const [selectedCategory, setSelectedCategory] = useState([])
+  // const monthNow = months[new Date().getMonth()]
+
   const [selectedMonth, setSelectedMonth] = useState([])
 
   const isCategorySelected = (category) =>
@@ -27,8 +29,8 @@ export default function IncomeExpense({ incomesExpenses }) {
   // console.log(incomeExpense)
 
   const isMonthSelected = (data) => {
-    console.log({ data })
-    console.log({ selectedMonth })
+    // console.log({ data })
+    // console.log({ selectedMonth })
     return (
       selectedMonth.includes(data?.fields?.mes) || selectedMonth.length === 0
     )

@@ -4,6 +4,7 @@ const IncExpensContext = createContext()
 
 const IncExpensProvider = ({ children }) => {
   const [incomesExpenses, setIncExpens] = useState([])
+  const [totales, setTotales] = useState({ incomesTotal: 0, expensesTotal: 0 })
 
   const refreshIncExpens = async () => {
     try {
@@ -36,8 +37,21 @@ const IncExpensProvider = ({ children }) => {
         headers: { 'Content-Type': 'application/json' },
       })
       const newIncomeExpense = await res.json()
+
       setIncExpens((prevIncomeExpense) => {
         return [newIncomeExpense, ...prevIncomeExpense]
+      })
+      setTotales((prevTotales) => {
+        let newTotales = { ...prevTotales }
+
+        if (newIncomeExpense.fields.concepto === 'Ingreso') {
+          newTotales.incomesTotal = prevTotales.incomesTotal +=
+            newIncomeExpense.fields.cantidad
+        } else {
+          newTotales.expensesTotal = prevTotales.expensesTotal +=
+            newIncomeExpense.fields.cantidad
+        }
+        return newTotales
       })
     } catch (err) {
       console.error(err)
@@ -90,6 +104,8 @@ const IncExpensProvider = ({ children }) => {
         deleteIncomeExpense,
         setIncExpens,
         refreshIncExpens,
+        totales,
+        setTotales,
       }}
     >
       {children}

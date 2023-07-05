@@ -23,16 +23,18 @@ export default function Home({
   expensesTotal,
   totalesIncomesExpensesMonths,
 }) {
-  const { incomesExpenses, setIncExpens } = useContext(IncExpensContext)
+  const { incomesExpenses, setIncExpens, totales, setTotales } =
+    useContext(IncExpensContext)
   const { openModal, closeModal, showModal } = useModal()
   // console.log(initialTodos)
   // console.log(user)
   useEffect(() => {
     setIncExpens(initialIncomesExpenese)
+    setTotales({ incomesTotal, expensesTotal })
   }, [])
 
   return (
-    <section className='min-h-screen flex flex-col justify-between pb-5'>
+    <section className='min-h-screen flex flex-col pb-5'>
       <Head>
         <title>Personal Accounting App</title>
         <link rel='icon' href='/favicon.ico' />
@@ -65,8 +67,8 @@ export default function Home({
             </button>
 
             <Totales
-              incomesTotal={incomesTotal}
-              expensesTotal={expensesTotal}
+              incomesTotal={totales.incomesTotal}
+              expensesTotal={totales.expensesTotal}
             />
             {incomesExpenses && (
               <IncomeExpense incomesExpenses={incomesExpenses} />
@@ -78,21 +80,66 @@ export default function Home({
               />
             )}
             <Modal show={showModal} onClose={closeModal}>
-              <IncomeExpenseForm />
+              <IncomeExpenseForm onCloseModal={closeModal} />
             </Modal>
           </>
         )}
 
         {!user && (
           <>
-            <img
-              src='/accounting.webp'
-              className='w-full h-auto'
-              alt='Accounting'
-            />
-            <p className='text-center'>
-              Inicia sesión para ver los ingresos y gastos.
-            </p>
+            <div className='flex items-center justify-center gap-4 md:flex-row flex-col mb-5'>
+              <div className='md:w-[500px] w-[300px] m-auto md:m-0'>
+                <img
+                  src='/accounting.webp'
+                  className='rounded-full w-[300px] h-[300px] md:w-[500px] md:h-[500px] object-cover shadow-md'
+                  alt='Accounting'
+                />
+              </div>
+              <div className='flex flex-col gap-4 w-[315px]'>
+                <h3 className='text-center mb-4 text-lg'>
+                  Recuerda que la clave para ahorrar y manejar tus gastos de
+                  manera efectiva es la disciplina y la constancia. Pequeños
+                  cambios en tus hábitos diarios pueden marcar una gran
+                  diferencia en tu situación financiera a largo plazo. ¡Buena
+                  suerte!
+                </h3>
+                <p className='text-center'>
+                  Inicia sesión para ver los ingresos y gastos.
+                </p>
+              </div>
+            </div>
+
+            <div className='flex flex-col gap-4 items-center justify-center mt-10 md:mb-5 md:w-full w-[90%] m-auto'>
+              <h3 className='text-center mb-4 text-3xl font-bold'>
+                Recomendaciones Prácticas para Ahorrar y Administrar tus Gastos
+                Eficientemente
+              </h3>
+              <ul className='p-0 list-decimal max-w-3xl m-auto'>
+                <li className='text-lg mb-3'>
+                  <strong>Establece un presupuesto:</strong> Lo primero que
+                  debes hacer es crear un presupuesto mensual. Anota tus
+                  ingresos y luego enumera todos tus gastos. Asigna montos
+                  específicos a cada categoría de gastos, como vivienda,
+                  transporte, alimentos, entretenimiento, etc. Asegúrate de no
+                  gastar más de lo que ingresas.
+                </li>
+                <li className='text-lg mb-3'>
+                  <strong>Prioriza tus gastos:</strong> Identifica cuáles son
+                  tus gastos más importantes y necesarios, como vivienda,
+                  alimentación y servicios básicos. Estos deben ser tus
+                  prioridades. Luego, evalúa tus gastos secundarios y considera
+                  si puedes reducirlos o eliminarlos para ahorrar más dinero.
+                </li>
+                <li className='text-lg'>
+                  <strong>Controla tus gastos diarios:</strong> Lleva un
+                  registro de todos tus gastos diarios, ya sea en papel, una
+                  hoja de cálculo o mediante aplicaciones móviles de gestión
+                  financiera. Esto te ayudará a tener una visión clara de en qué
+                  estás gastando tu dinero y te permitirá identificar áreas en
+                  las que puedas reducir gastos.
+                </li>
+              </ul>
+            </div>
           </>
         )}
       </main>
@@ -120,6 +167,7 @@ export async function getServerSideProps({ req, res }) {
         .select({
           sort: [{ field: 'fecha', direction: 'desc' }],
           filterByFormula: `userId = '${userId}'`,
+          maxRecords: 30,
         })
         .firstPage()
 
