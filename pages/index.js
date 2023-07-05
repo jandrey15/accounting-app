@@ -41,13 +41,27 @@ export default function Home({
       <main>
         {user && (
           <>
-            <h1 className='text-2xl text-center mb-4'>Ingresos y Gastos</h1>
-            <button
-              type='button'
-              onClick={openModal}
-              className='fixed right-5 bottom-5'
-            >
-              <img src='/agregar.png' alt='Agregar' width={40} height={40} />
+            <h1 className='text-2xl text-center mb-4 font-bold'>
+              Ingresos y Gastos
+            </h1>
+            <button type='button' className='fixed right-5 bottom-5 z-50'>
+              {!showModal ? (
+                <img
+                  src='/agregar.png'
+                  alt='Agregar'
+                  width={40}
+                  height={40}
+                  onClick={openModal}
+                />
+              ) : (
+                <img
+                  src='/close.png'
+                  alt='Cancelar'
+                  width={40}
+                  height={40}
+                  onClick={closeModal}
+                />
+              )}
             </button>
 
             <Totales

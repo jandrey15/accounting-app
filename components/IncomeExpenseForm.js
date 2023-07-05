@@ -31,7 +31,7 @@ export default function IncomeExpenseForm() {
   return (
     <>
       <form className='w-full max-w-full' onSubmit={handleSubmit}>
-        <div className='grid grid-cols-2 md:-mx-3 md:gap-y-5'>
+        <div className='grid grid-cols-1 md:grid-cols-2 md:-mx-3 md:gap-y-5'>
           <div className='w-full px-3 mb-6 md:mb-0'>
             <label
               className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
