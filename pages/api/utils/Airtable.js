@@ -60,7 +60,7 @@ const minifyRecordsTotalesMonths = ({ type, userId }) => {
     // let out = 0
     const year = new Date().getFullYear().toString()
     const totalMonths = []
-    let countPage = 0
+
     tableIncomeExpenses
       .select({
         filterByFormula: `AND(concepto = '${type}', userId = '${userId}', year = '${year}') `,
@@ -103,7 +103,7 @@ const minifyRecordsTotalesMonths = ({ type, userId }) => {
           // To fetch the next page of records, call `fetchNextPage`.
           // If there are more records, `page` will get called again.
           // If there are no more records, `done` will get called.
-          fetchNextPage(countPage)
+          fetchNextPage()
         },
         function done(err) {
           if (err) {
