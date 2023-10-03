@@ -23,8 +23,7 @@ export default function Home({
   expensesTotal,
   totalesIncomesExpensesMonths,
 }) {
-  const { incomesExpenses, setIncExpens, totales, setTotales } =
-    useContext(IncExpensContext)
+  const { incomesExpenses, setIncExpens, totales, setTotales } = useContext(IncExpensContext)
   const { openModal, closeModal, showModal } = useModal()
   // console.log(initialTodos)
   // console.log(user)
@@ -43,42 +42,19 @@ export default function Home({
       <main>
         {user && (
           <>
-            <h1 className='text-2xl text-center mb-4 font-bold'>
-              Ingresos y Gastos
-            </h1>
+            <h1 className='text-2xl text-center mb-4 font-bold'>Ingresos y Gastos</h1>
             <button type='button' className='fixed right-5 bottom-5 z-50'>
               {!showModal ? (
-                <img
-                  src='/agregar.png'
-                  alt='Agregar'
-                  width={40}
-                  height={40}
-                  onClick={openModal}
-                />
+                <img src='/agregar.png' alt='Agregar' width={40} height={40} onClick={openModal} />
               ) : (
-                <img
-                  src='/close.png'
-                  alt='Cancelar'
-                  width={40}
-                  height={40}
-                  onClick={closeModal}
-                />
+                <img src='/close.png' alt='Cancelar' width={40} height={40} onClick={closeModal} />
               )}
             </button>
 
-            <Totales
-              incomesTotal={totales.incomesTotal}
-              expensesTotal={totales.expensesTotal}
-            />
-            {incomesExpenses && (
-              <IncomeExpense incomesExpenses={incomesExpenses} />
-            )}
+            <Totales incomesTotal={totales.incomesTotal} expensesTotal={totales.expensesTotal} />
+            {incomesExpenses && <IncomeExpense incomesExpenses={incomesExpenses} />}
 
-            {totalesIncomesExpensesMonths && (
-              <IncomeExpenseMonths
-                incomesExpenses={totalesIncomesExpensesMonths}
-              />
-            )}
+            {totalesIncomesExpensesMonths && <IncomeExpenseMonths incomesExpenses={totalesIncomesExpensesMonths} />}
             <Modal show={showModal} onClose={closeModal}>
               <IncomeExpenseForm onCloseModal={closeModal} />
             </Modal>
@@ -97,46 +73,35 @@ export default function Home({
               </div>
               <div className='flex flex-col gap-4 w-[315px]'>
                 <h3 className='text-center mb-4 text-lg'>
-                  Recuerda que la clave para ahorrar y manejar tus gastos de
-                  manera efectiva es la disciplina y la constancia. Pequeños
-                  cambios en tus hábitos diarios pueden marcar una gran
-                  diferencia en tu situación financiera a largo plazo. ¡Buena
-                  suerte!
+                  Recuerda que la clave para ahorrar y manejar tus gastos de manera efectiva es la disciplina y la
+                  constancia. Pequeños cambios en tus hábitos diarios pueden marcar una gran diferencia en tu situación
+                  financiera a largo plazo. ¡Buena suerte!
                 </h3>
-                <p className='text-center'>
-                  Inicia sesión para ver los ingresos y gastos.
-                </p>
+                <p className='text-center'>Inicia sesión para ver los ingresos y gastos.</p>
               </div>
             </div>
 
             <div className='flex flex-col gap-4 items-center justify-center mt-10 md:mb-5 md:w-full w-[90%] m-auto'>
               <h3 className='text-center mb-4 text-3xl font-bold'>
-                Recomendaciones Prácticas para Ahorrar y Administrar tus Gastos
-                Eficientemente
+                Recomendaciones Prácticas para Ahorrar y Administrar tus Gastos Eficientemente
               </h3>
               <ul className='p-0 list-decimal max-w-3xl m-auto'>
                 <li className='text-lg mb-3'>
-                  <strong>Establece un presupuesto:</strong> Lo primero que
-                  debes hacer es crear un presupuesto mensual. Anota tus
-                  ingresos y luego enumera todos tus gastos. Asigna montos
-                  específicos a cada categoría de gastos, como vivienda,
-                  transporte, alimentos, entretenimiento, etc. Asegúrate de no
-                  gastar más de lo que ingresas.
+                  <strong>Establece un presupuesto:</strong> Lo primero que debes hacer es crear un presupuesto mensual.
+                  Anota tus ingresos y luego enumera todos tus gastos. Asigna montos específicos a cada categoría de
+                  gastos, como vivienda, transporte, alimentos, entretenimiento, etc. Asegúrate de no gastar más de lo
+                  que ingresas.
                 </li>
                 <li className='text-lg mb-3'>
-                  <strong>Prioriza tus gastos:</strong> Identifica cuáles son
-                  tus gastos más importantes y necesarios, como vivienda,
-                  alimentación y servicios básicos. Estos deben ser tus
-                  prioridades. Luego, evalúa tus gastos secundarios y considera
-                  si puedes reducirlos o eliminarlos para ahorrar más dinero.
+                  <strong>Prioriza tus gastos:</strong> Identifica cuáles son tus gastos más importantes y necesarios,
+                  como vivienda, alimentación y servicios básicos. Estos deben ser tus prioridades. Luego, evalúa tus
+                  gastos secundarios y considera si puedes reducirlos o eliminarlos para ahorrar más dinero.
                 </li>
                 <li className='text-lg'>
-                  <strong>Controla tus gastos diarios:</strong> Lleva un
-                  registro de todos tus gastos diarios, ya sea en papel, una
-                  hoja de cálculo o mediante aplicaciones móviles de gestión
-                  financiera. Esto te ayudará a tener una visión clara de en qué
-                  estás gastando tu dinero y te permitirá identificar áreas en
-                  las que puedas reducir gastos.
+                  <strong>Controla tus gastos diarios:</strong> Lleva un registro de todos tus gastos diarios, ya sea en
+                  papel, una hoja de cálculo o mediante aplicaciones móviles de gestión financiera. Esto te ayudará a
+                  tener una visión clara de en qué estás gastando tu dinero y te permitirá identificar áreas en las que
+                  puedas reducir gastos.
                 </li>
               </ul>
             </div>
@@ -167,7 +132,7 @@ export async function getServerSideProps({ req, res }) {
         .select({
           sort: [{ field: 'fecha', direction: 'desc' }],
           filterByFormula: `userId = '${userId}'`,
-          maxRecords: 30,
+          maxRecords: 32,
         })
         .firstPage()
 

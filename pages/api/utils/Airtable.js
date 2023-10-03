@@ -1,13 +1,11 @@
 const Airtable = require('airtable')
-const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
-  process.env.AIRTABLE_BASE_ID
-)
+const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID)
 import { months } from '../../../utils/consts'
 
 const tableTodo = base(process.env.AIRTABLE_TABLE_NAME)
 const tableIncomeExpenses = base(process.env.AIRTABLE_TABLE_INCOME_NAME)
 
-const getMinifiedRecord = (record) => {
+const getMinifiedRecord = record => {
   // console.log(record)
   if (!record.fields.completed) {
     record.fields.completed = false
@@ -19,8 +17,8 @@ const getMinifiedRecord = (record) => {
   }
 }
 
-const minifyRecords = (records) => {
-  return records.map((record) => getMinifiedRecord(record))
+const minifyRecords = records => {
+  return records.map(record => getMinifiedRecord(record))
 }
 
 const minifyRecordsTotales = ({ type, userId }) => {
@@ -62,7 +60,7 @@ const minifyRecordsTotalesMonths = ({ type, userId }) => {
     // let out = 0
     const year = new Date().getFullYear().toString()
     const totalMonths = []
-
+    let countPage = 0
     tableIncomeExpenses
       .select({
         filterByFormula: `AND(concepto = '${type}', userId = '${userId}', year = '${year}') `,
@@ -70,8 +68,8 @@ const minifyRecordsTotalesMonths = ({ type, userId }) => {
       .eachPage(
         function page(records, fetchNextPage) {
           // This function (`page`) will get called for each page of records.
-
-          months.forEach((month) => {
+          const totalMonthsPage = []
+          months.forEach(month => {
             let total = 0
             records.forEach(function (record) {
               // console.log('Retrieved', record.get('cantidad'))
@@ -79,19 +77,40 @@ const minifyRecordsTotalesMonths = ({ type, userId }) => {
                 total = total + Number(record.get('cantidad'))
               }
             })
-            totalMonths.push({ month: month, type: type, total })
+
+            totalMonthsPage.push({ month: month, type: type, total })
           })
+
+          totalMonthsPage.forEach(monthPage => {
+            // console.log(monthPage?.month)
+            // const index = totalMonths.indexOf({ month: monthPage?.month })
+            const index = totalMonths.map(item => item.month).indexOf(monthPage?.month)
+            // console.log({ index })
+            if (index !== -1) {
+              console.log('Ya existe')
+              totalMonths[index] = {
+                month: monthPage.month,
+                type: monthPage.type,
+                total: monthPage.total + totalMonths[index].total,
+              }
+            } else {
+              totalMonths.push({ month: monthPage.month, type: monthPage.type, total: monthPage.total })
+            }
+          })
+
+          // console.log({ totalMonths })
 
           // To fetch the next page of records, call `fetchNextPage`.
           // If there are more records, `page` will get called again.
           // If there are no more records, `done` will get called.
-          fetchNextPage()
+          fetchNextPage(countPage)
         },
         function done(err) {
           if (err) {
             console.error(err)
             reject(err)
           } else {
+            console.log('se resolvio la promise...')
             resolve(totalMonths)
           }
         }
